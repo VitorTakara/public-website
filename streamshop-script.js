@@ -3,8 +3,8 @@ var ss = (function () {
 	var btn, liveContainer, liveContainerCloseBtn, iframe, options;
 
 	function registerGlobalIframeEvent() {
-		console.log(window)
-		console.log(window.parent)
+		// console.log(window)
+		// console.log(window.parent)
 		window.addEventListener('message', function (event) {
 			if (typeof event.data !== 'string') return;
 
