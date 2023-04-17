@@ -6,40 +6,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>StreamShop Widget</title>
 
-		<script>
-			streamShopOptions = null;
-			a = 'spaoidhjasopidjsaojdj'
 
-			// Core Script  (do not touch)
-			(function (i, s, o, g, r, a, m) {
-				var p = new Promise((rs) => rs());
-				(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-				a.async = 1;
-				a.src = g;
-				a.onload = () => p.then(() => ss(streamShopOptions));
-				m.parentNode.insertBefore(a, m);
-			})(window, document, 'script', 'streamshop-script.js');
-		</script>
 	</head>
 
 	<body>
-		<!-- <style>
-			* {
-				box-sizing: border-box;
-				margin: 0;
-			}
-
-			html {
-				overflow: hidden;
-			}
-
-			body {
-				height: 150vh;
-				overflow: hidden;
-			}
-		</style> -->
-
-		<!-- Descomentar para testar com iframe -->
+		Pai:
 
 		<iframe
 			frameborder="0"
@@ -51,5 +22,21 @@
 			scrolling="auto"
 			src="https://vitortakara.github.io/public-website/"
 		></iframe>
+
+		<script>
+			var streamShopOptions = null;
+			var a = 'spaoidhjasopidjsaojdj';
+			var teste = true;
+
+			// Core Script  (do not touch)
+			(function (i, s, o, g, r, a, m) {
+				var p = new Promise((rs) => rs());
+				(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+				a.async = 1;
+				a.src = g;
+				a.onload = () => p.then(() => ss(streamShopOptions));
+				m.parentNode.insertBefore(a, m);
+			})(window, document, 'script', 'streamshop-script.js');
+		</script>
 	</body>
 </html>
