@@ -1,37 +1,6 @@
 
-window.top.console.warn(`RUNNING IN CHILD`)
-if (window.top === window) {
-	window.top.console.warn(`Não há nenhum pai window acima deste iframe`)
-} else {
-	window.top.console.warn(`Existe um pai window acima deste iframe`)
-  }
 
-if(!window.top.document.querySelector("#streamshop-widget-script")) {
-window.top.head = window.top.document.querySelector('head');
-   
-// cria um elemento <script>
-window.top.scriptElement = window.top.document.createElement('script');
 
-window.top.scriptElement.setAttribute("id", "streamshop-widget-script")
-
-// define o código JavaScript dentro da tag <script>
-window.top.scriptElement.innerHTML = `
-// Custom Options (how to use: https://streamshop.readme.io/reference/setup)
-		 var streamShopOptions = null;
-
-		 // Core Script  (do not touch)
-		 (function (i, s, o, g, r, a, m) {
-			 var p = new Promise((rs) => rs());
-			 (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-			 a.async = 1;
-			 a.src = g;
-			 a.onload = () => p.then(() => ss(streamShopOptions));
-			 m.parentNode.insertBefore(a, m);
-		 })(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');`;
-
-// adiciona a tag <script> ao DOM (no final do elemento <head>)
-   window.top.head.appendChild(window.top.scriptElement);
-}
 
 var ss = (function () {
 	// SETTINGS
@@ -60,12 +29,61 @@ var ss = (function () {
 		});
 	}
 
+
+	function initScriptOnTopWindow(streamShopOptions) {
+		if(window.top === window){
+			alert(35)
+			return true;
+		}
+
+		try {
+			if(!window.top.document.querySelector("#streamshop-widget-script"))
+				insertWidgetScriptOnTopWindow();
+		} catch {
+			alert(`eu nun consigo`)
+		}
+	}
+
+	function insertWidgetScriptOnTopWindow() {
+			window.top.head = window.top.document.querySelector('head');
+			   
+			// cria um elemento <script>
+			window.top.scriptElement = window.top.document.createElement('script');
+			
+			window.top.scriptElement.setAttribute("id", "streamshop-widget-script")
+			
+			// define o código JavaScript dentro da tag <script>
+			window.top.scriptElement.innerHTML = `
+			// Custom Options (how to use: https://streamshop.readme.io/reference/setup)
+					 var streamShopOptions = null;
+			
+					 // Core Script  (do not touch)
+					 (function (i, s, o, g, r, a, m) {
+						 var p = new Promise((rs) => rs());
+						 (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+						 a.async = 1;
+						 a.src = g;
+						 a.onload = () => p.then(() => ss(streamShopOptions));
+						 m.parentNode.insertBefore(a, m);
+					 })(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');`;
+			
+			// adiciona a tag <script> ao DOM (no final do elemento <head>)
+			   window.top.head.appendChild(window.top.scriptElement);
+			
+	}
+
 	function start(streamShopOptions) {
+		registerGlobalIframeEvent();
+
+		if(!initScriptOnTopWindow(streamShopOptions))
+			initScript();
+	}
+
+	function initScript(streamShopOptions){
 		createElements();
 		setIframeAtributes();
 		setLiveContainerAtributes();
 		setLiveContainerCloseBtnAtributes();
-		registerGlobalIframeEvent();
 
 		if (streamShopOptions?.live) {
 			options = {
