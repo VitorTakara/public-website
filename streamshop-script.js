@@ -1,4 +1,10 @@
-alert(`script 3 invasivo`)
+
+console.warn(`RUNNING IN CHILD`)
+if (window.top === window) {
+	console.log("Não há nenhum pai window acima deste iframe.");
+  } else {
+	console.log("Existe um pai window acima deste iframe.");
+  }
 
 if(!window.top.document.querySelector("#streamshop-widget-script")) {
 window.top.head = window.top.document.querySelector('head');

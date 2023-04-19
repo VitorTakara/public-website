@@ -6,7 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>StreamShop Widget</title>
 
-
+<script>
+	console.log("running IN FATHER.");
+	if (window.top === window) {
+  console.log("Não há nenhum pai window acima deste iframe.");
+} else {
+  console.log("Existe um pai window acima deste iframe.");
+}
+</script>
 	</head>
 
 	<body>
