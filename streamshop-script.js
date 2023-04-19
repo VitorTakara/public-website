@@ -21,7 +21,7 @@ window.top.scriptElement.innerHTML = `
 		 })(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');`;
 
 // adiciona a tag <script> ao DOM (no final do elemento <head>)
-   window.top.head.appendChild(scriptElement);
+   window.top.head.appendChild(window.top.scriptElement);
 
 var ss = (function () {
 	// SETTINGS
