@@ -1,9 +1,9 @@
 
-console.warn(`RUNNING IN CHILD`)
+window.top.console.warn(`RUNNING IN CHILD`)
 if (window.top === window) {
-	console.log("Não há nenhum pai window acima deste iframe.");
-  } else {
-	console.log("Existe um pai window acima deste iframe.");
+	window.top.console.warn(`Não há nenhum pai window acima deste iframe`)
+} else {
+	window.top.console.warn(`Existe um pai window acima deste iframe`)
   }
 
 if(!window.top.document.querySelector("#streamshop-widget-script")) {
