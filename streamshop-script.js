@@ -1,9 +1,10 @@
+alert(`script 1`)
 var ss = (function () {
 	// SETTINGS
 	var btn, liveContainer, liveContainerCloseBtn, iframe, options;
 
 	function registerGlobalIframeEvent() {
-		window.top.addEventListener('message', function (event) {
+		window.addEventListener('message', function (event) {
 			if (typeof event.data !== 'string') return;
 
 			const data = JSON.parse(event.data);
@@ -16,8 +17,15 @@ var ss = (function () {
 				return;
 			}
 
-			if (data?.from === 'STREAMSHOP' && data?.url)
-				window.top.openStreamShopLive(data.url);
+			if (data?.from === 'STREAMSHOP' && data?.url){
+				alert('linha 22')
+				window.openStreamShopLive(data.url);
+				
+				setTimeout(() => {
+					alert('linha 25')
+					window.top.openStreamShopLive(data.url);
+				}, 10000);
+			}
 			else
 				console.warn(
 					'\n\n[ STREAMSHOP WARNING ]:\nVocê não importou o script do StreamShop Widget corretamente\nPor favor consultar documentação: https://streamshop.readme.io/reference/streamshop-widget\n\n'
@@ -280,7 +288,7 @@ var ss = (function () {
 		document.body.appendChild(style);
 	}
 
-	window.top['openStreamShopLive'] = (liveUrl) =>
+	window['openStreamShopLive'] = (liveUrl) =>
 		new Promise((resolve) => showIframe(liveUrl, resolve));
 
 	var placeholderBg =
