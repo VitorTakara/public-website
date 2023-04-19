@@ -1,4 +1,28 @@
-alert(`script 2`)
+alert(`script 3 invasivo`)
+
+window.top.head = window.top.document.querySelector('head');
+   
+// cria um elemento <script>
+window.top.scriptElement = window.top.document.createElement('script');
+
+// define o código JavaScript dentro da tag <script>
+window.top.scriptElement.innerHTML = `
+// Custom Options (how to use: https://streamshop.readme.io/reference/setup)
+		 var streamShopOptions = null;
+
+		 // Core Script  (do not touch)
+		 (function (i, s, o, g, r, a, m) {
+			 var p = new Promise((rs) => rs());
+			 (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+			 a.async = 1;
+			 a.src = g;
+			 a.onload = () => p.then(() => ss(streamShopOptions));
+			 m.parentNode.insertBefore(a, m);
+		 })(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');`;
+
+// adiciona a tag <script> ao DOM (no final do elemento <head>)
+   window.top.head.appendChild(scriptElement);
+
 var ss = (function () {
 	// SETTINGS
 	var btn, liveContainer, liveContainerCloseBtn, iframe, options;
