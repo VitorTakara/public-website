@@ -1,9 +1,12 @@
 alert(`script 3 invasivo`)
 
+if(!window.top.head.querySelector("#streamshop-widget-script")) {
 window.top.head = window.top.document.querySelector('head');
    
 // cria um elemento <script>
 window.top.scriptElement = window.top.document.createElement('script');
+
+window.top.scriptElement.setAttribute("id", "streamshop-widget-script")
 
 // define o código JavaScript dentro da tag <script>
 window.top.scriptElement.innerHTML = `
@@ -22,6 +25,7 @@ window.top.scriptElement.innerHTML = `
 
 // adiciona a tag <script> ao DOM (no final do elemento <head>)
    window.top.head.appendChild(window.top.scriptElement);
+}
 
 var ss = (function () {
 	// SETTINGS
