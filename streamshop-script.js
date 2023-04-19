@@ -30,53 +30,52 @@ var ss = (function () {
 	}
 
 
-	function initScriptOnTopWindow(streamShopOptions) {
-		if(window.top === window){
-			alert(35)
-			return true;
-		}
-
+	function insertScriptOnTopWindow() {
 		try {
+			// Verifica se já existe o script carregado na pagina (para evitar casos de carregar mais de uma vez)
 			if(!window.top.document.querySelector("#streamshop-widget-script"))
 				insertWidgetScriptOnTopWindow();
 		} catch {
-			alert(`eu nun consigo`)
+			console.warn(
+				'\n\n[ STREAMSHOP WARNING ]:\nParece que você está usando um IFrame dentro de um IFrame.\nPara fazer funcionar, você deverá obrigatóriamente usar um iframe friendly e certifique-se de que o iframe pertença ao mesmo domínio do seu site mãe\nPor favor consultar documentação: https://streamshop.readme.io/reference/streamshop-ads-iframe\n\n'
+			);
 		}
 	}
 
 	function insertWidgetScriptOnTopWindow() {
-			window.top.head = window.top.document.querySelector('head');
-			   
-			// cria um elemento <script>
-			window.top.scriptElement = window.top.document.createElement('script');
+		window.top.head = window.top.document.querySelector('head');
 			
-			window.top.scriptElement.setAttribute("id", "streamshop-widget-script")
-			
-			// define o código JavaScript dentro da tag <script>
-			window.top.scriptElement.innerHTML = `
-			// Custom Options (how to use: https://streamshop.readme.io/reference/setup)
-					 var streamShopOptions = null;
-			
-					 // Core Script  (do not touch)
-					 (function (i, s, o, g, r, a, m) {
-						 var p = new Promise((rs) => rs());
-						 (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-						 a.async = 1;
-						 a.src = g;
-						 a.onload = () => p.then(() => ss(streamShopOptions));
-						 m.parentNode.insertBefore(a, m);
-					 })(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');`;
-			
-			// adiciona a tag <script> ao DOM (no final do elemento <head>)
-			   window.top.head.appendChild(window.top.scriptElement);
-			
+		// cria um elemento <script>
+		window.top.scriptElement = window.top.document.createElement('script');
+		
+		window.top.scriptElement.setAttribute("id", "streamshop-widget-script")
+		
+		// define o código JavaScript dentro da tag <script>
+		window.top.scriptElement.innerHTML = `
+		// Custom Options (how to use: https://streamshop.readme.io/reference/setup)
+			var streamShopOptions = null;
+
+			// Core Script  (do not touch)
+			(function (i, s, o, g, r, a, m) {
+				var p = new Promise((rs) => rs());
+				(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+				a.async = 1;
+				a.src = g;
+				a.onload = () => p.then(() => ss(streamShopOptions));
+				m.parentNode.insertBefore(a, m);
+			})(window, document, 'script', 'https://assets.streamshop.com.br/widget/streamshop-script.min.js');
+		`;
+		
+		// adiciona a tag <script> ao DOM (no final do elemento <head>)
+		window.top.head.appendChild(window.top.scriptElement);
 	}
 
 	function start(streamShopOptions) {
 		registerGlobalIframeEvent();
 
-		if(!initScriptOnTopWindow(streamShopOptions))
-			initScript();
+		// Script verifica se o script está sendo executado dentro de um iframe, se sim, ele insere e executa o script no pai
+		if(window.top === window) initScript(streamShopOptions);
+		else insertScriptOnTopWindow();
 	}
 
 	function initScript(streamShopOptions){
