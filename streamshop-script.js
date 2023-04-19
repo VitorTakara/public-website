@@ -1,6 +1,6 @@
 alert(`script 3 invasivo`)
 
-if(!window.top.head.querySelector("#streamshop-widget-script")) {
+if(!window.top.document.querySelector("#streamshop-widget-script")) {
 window.top.head = window.top.document.querySelector('head');
    
 // cria um elemento <script>
