@@ -1,9 +1,14 @@
+alert(`script 1`)
 var ss = (function () {
 	// SETTINGS
-	var btn, liveContainer, liveContainerCloseBtn, iframe, options;
+	window.top.btn = null;
+	window.top.liveContainer = null;
+	window.top.liveContainerCloseBtn = null;
+	window.top.iframe = null;
+	window.top.options = null;
 
 	function registerGlobalIframeEvent() {
-		window.top.addEventListener('message', function (event) {
+		window.addEventListener('message', function (event) {
 			if (typeof event.data !== 'string') return;
 
 			const data = JSON.parse(event.data);
@@ -63,69 +68,69 @@ var ss = (function () {
 	}
 
 	function createElements() {
-		btn = window.top.document.createElement('button');
-		liveContainer = window.top.document.createElement('div');
-		liveContainerCloseBtn = window.top.document.createElement('div');
-		iframe = window.top.document.createElement('iframe');
+		window.top.btn = window.top.document.createElement('button');
+		window.top.liveContainer = window.top.document.createElement('div');
+		window.top.liveContainerCloseBtn = window.top.document.createElement('div');
+		window.top.iframe = window.top.document.createElement('iframe');
 	}
 
 	// IFRAME CONTROL
 	function showIframe(liveUrl, resolveRef) {
-		iframe.setAttribute('src', liveUrl);
-		liveContainer.appendChild(iframe);
-		liveContainer.appendChild(liveContainerCloseBtn);
-		liveContainerCloseBtn.addEventListener('click', resolveRef);
+		window.top.iframe.setAttribute('src', liveUrl);
+		window.top.liveContainer.appendChild(iframe);
+		window.top.liveContainer.appendChild(liveContainerCloseBtn);
+		window.top.liveContainerCloseBtn.addEventListener('click', resolveRef);
 		window.top.document.body.appendChild(liveContainer);
 
 		setTimeout(() => {
-			liveContainer.style.opacity = '1';
-			liveContainerCloseBtn.style.opacity = '1';
-			liveContainer.style.bottom = '0px';
-			liveContainer.style.background = '#0000008a';
+			window.top.liveContainer.style.opacity = '1';
+			window.top.liveContainerCloseBtn.style.opacity = '1';
+			window.top.liveContainer.style.bottom = '0px';
+			window.top.liveContainer.style.background = '#0000008a';
 		}, 500);
 	}
 
 	function removeIframe() {
 		resetStyles();
 		setTimeout(() => {
-			liveContainer.remove();
-			liveContainerCloseBtn.remove();
+			window.top.liveContainer.remove();
+			window.top.liveContainerCloseBtn.remove();
 		}, 500);
 	}
 
 	function resetStyles() {
-		liveContainer.style.opacity = '0';
-		liveContainerCloseBtn.style.opacity = '0';
-		liveContainer.style.bottom = '-50vh';
-		liveContainer.style.background = '#ff000000';
+		window.top.liveContainer.style.opacity = '0';
+		window.top.liveContainerCloseBtn.style.opacity = '0';
+		window.top.liveContainer.style.bottom = '-50vh';
+		window.top.liveContainer.style.background = '#ff000000';
 	}
 
 	// ATRIBUTOS
 	function setIframeAtributes() {
-		iframe.setAttribute(
+		window.top.iframe.setAttribute(
 			'allow',
 			'microphone; camera; fullscreen; autoplay; picture-in-picture'
 		);
-		iframe.setAttribute('allowtransparency', 'true');
-		iframe.setAttribute('frameBorder', '0');
-		iframe.setAttribute('marginheight', '0');
-		iframe.setAttribute('marginwidth', '0');
-		iframe.setAttribute('width', '100%');
-		iframe.setAttribute('height', '97%');
-		iframe.setAttribute('scrolling', 'auto');
-		iframe.setAttribute('src', '');
-		iframe.style.background = 'black';
+		window.top.iframe.setAttribute('allowtransparency', 'true');
+		window.top.iframe.setAttribute('frameBorder', '0');
+		window.top.iframe.setAttribute('marginheight', '0');
+		window.top.iframe.setAttribute('marginwidth', '0');
+		window.top.iframe.setAttribute('width', '100%');
+		window.top.iframe.setAttribute('height', '97%');
+		window.top.iframe.setAttribute('scrolling', 'auto');
+		window.top.iframe.setAttribute('src', '');
+		window.top.iframe.style.background = 'black';
 	}
 
 	function setBtnAtributes() {
 		// Add class
-		btn.classList.add('ss-button-widget');
+		window.top.btn.classList.add('ss-button-widget');
 
 		if (options?.onHover && options?.onHover?.enable === true) {
-			btn.classList.add('-hover');
+			window.top.btn.classList.add('-hover');
 		}
 
-		Object.assign(btn.style, {
+		Object.assign(window.top.btn.style, {
 			position: 'fixed',
 			[options?.positionY === 'bottom'
 				? 'bottom'
@@ -147,42 +152,42 @@ var ss = (function () {
 		});
 
 		if (options?.animation === true)
-			btn.style.animation = 'streamshopPulseAn 2s infinite';
+		window.top.btn.style.animation = 'streamshopPulseAn 2s infinite';
 
 		if (options?.video && options?.video.enable === true) {
 			// Display
-			btn.style.display = 'flex';
-			btn.style.alignItems = 'center';
-			btn.style.justifyContent = 'center';
-			btn.style.overflow = 'hidden';
+			window.top.btn.style.display = 'flex';
+			window.top.btn.style.alignItems = 'center';
+			window.top.btn.style.justifyContent = 'center';
+			window.top.btn.style.overflow = 'hidden';
 
-			var video = window.top.document.createElement('video');
+			window.top.video = window.top.document.createElement('video');
 
-			video.setAttribute('muted', 'true');
-			video.setAttribute('autoplay', 'true');
-			video.setAttribute('loop', 'true');
-			video.removeAttribute('controls');
-			video.src = options?.video.url;
-			video.muted = true;
-			video.autoplay = true;
+			window.top.video.setAttribute('muted', 'true');
+			window.top.video.setAttribute('autoplay', 'true');
+			window.top.video.setAttribute('loop', 'true');
+			window.top.video.removeAttribute('controls');
+			window.top.video.src = options?.video.url;
+			window.top.video.muted = true;
+			window.top.video.autoplay = true;
 
-			video.style.height = '100%';
+			window.top.video.style.height = '100%';
 
-			btn.appendChild(video);
+			window.top.btn.appendChild(video);
 
-			video.addEventListener(
+			window.top.video.addEventListener(
 				'loadeddata',
 				() => addButtonWidgetOnScreen(),
 				false
 			);
 		} else {
 			addButtonWidgetOnScreen();
-			btn.style.background = `url(${options.bg})`;
-			btn.style.backgroundPosition = 'center';
-			btn.style.backgroundSize = 'cover';
+			window.top.btn.style.background = `url(${options.bg})`;
+			window.top.btn.style.backgroundPosition = 'center';
+			window.top.btn.style.backgroundSize = 'cover';
 		}
 
-		btn.addEventListener('click', () =>
+		window.top.btn.addEventListener('click', () =>
 			new Promise((resolve) => showIframe(options.live, resolve)).then(() => {
 				options.afterClose
 					? options.afterClose()
@@ -194,7 +199,7 @@ var ss = (function () {
 	}
 
 	function setLiveContainerCloseBtnAtributes() {
-		Object.assign(liveContainerCloseBtn.style, {
+		Object.assign(window.top.liveContainerCloseBtn.style, {
 			cursor: 'pointer',
 			position: 'absolute',
 			opacity: 0,
@@ -210,11 +215,11 @@ var ss = (function () {
 			outline: '2px solid #00000024',
 		});
 
-		liveContainerCloseBtn.innerHTML = `<svg style="width: 100%; height: 100%" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z"/></svg>`;
+		window.top.liveContainerCloseBtn.innerHTML = `<svg style="width: 100%; height: 100%" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12 12-5.373 12-12zm-18.005-1.568l1.415-1.414 4.59 4.574 4.579-4.574 1.416 1.414-5.995 5.988-6.005-5.988z"/></svg>`;
 	}
 
 	function setLiveContainerAtributes() {
-		Object.assign(liveContainer.style, {
+		Object.assign(window.top.liveContainer.style, {
 			position: 'fixed',
 			bottom: '-50vw',
 			width: '100%',
@@ -227,10 +232,10 @@ var ss = (function () {
 			alignItems: 'flex-end',
 		});
 
-		liveContainerCloseBtn.addEventListener('click', function () {
-			liveContainer.style.bottom = '-50vw';
-			liveContainer.style.opacity = '0';
-			liveContainerCloseBtn.style.opacity = '0';
+		window.top.liveContainerCloseBtn.addEventListener('click', function () {
+			window.top.liveContainer.style.bottom = '-50vw';
+			window.top.liveContainer.style.opacity = '0';
+			window.top.liveContainerCloseBtn.style.opacity = '0';
 
 			setTimeout(() => removeIframe(), 500);
 		});
@@ -238,9 +243,9 @@ var ss = (function () {
 
 	// STYLES
 	function createBtnStyles() {
-		var style = window.top.document.createElement('style');
+		window.top.style = document.createElement('style');
 
-		style.append(`
+		window.top.style.append(`
         ${
 					options?.onHover && options?.onHover?.enable
 						? `
@@ -277,7 +282,7 @@ var ss = (function () {
                 }
             }`);
 
-		window.top.document.body.appendChild(style);
+			window.top.document.body.appendChild(style);
 	}
 
 	window.top['openStreamShopLive'] = (liveUrl) =>

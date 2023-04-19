@@ -1,4 +1,4 @@
-alert(`script 1`)
+alert(`script 2`)
 var ss = (function () {
 	// SETTINGS
 	var btn, liveContainer, liveContainerCloseBtn, iframe, options;
@@ -17,15 +17,8 @@ var ss = (function () {
 				return;
 			}
 
-			if (data?.from === 'STREAMSHOP' && data?.url){
-				alert('linha 22')
-				window.openStreamShopLive(data.url);
-				
-				setTimeout(() => {
-					alert('linha 25')
-					window.top.openStreamShopLive(data.url);
-				}, 10000);
-			}
+			if (data?.from === 'STREAMSHOP' && data?.url)
+				window.top.openStreamShopLive(data.url);
 			else
 				console.warn(
 					'\n\n[ STREAMSHOP WARNING ]:\nVocê não importou o script do StreamShop Widget corretamente\nPor favor consultar documentação: https://streamshop.readme.io/reference/streamshop-widget\n\n'
